@@ -19,7 +19,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/scaledata/pq/oid"
+	"github.com/lib/pq/oid"
 )
 
 // Common error types
@@ -46,7 +46,7 @@ func (d *Driver) Open(name string) (driver.Conn, error) {
 }
 
 func init() {
-	sql.Register("sdpostgres", &Driver{})
+	sql.Register("postgres", &Driver{})
 }
 
 type parameterStatus struct {
