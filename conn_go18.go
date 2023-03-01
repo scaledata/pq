@@ -124,6 +124,7 @@ func (cn *conn) watchCancel(ctx context.Context) func() {
 				defer cancel()
 
 				_ = cn.cancel(ctxCancel)
+				cn.Close()
 			case <-finished:
 			}
 		}()
