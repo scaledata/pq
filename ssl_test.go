@@ -269,7 +269,12 @@ func TestSSLClientCertificates(t *testing.T) {
 		t.Fatalf("expected %s, got %#+v", ErrSSLKeyHasWorldPermissions, err)
 	}
 
-	sslkey := filepath.Join(certpath, "postgresql.key")
+	// SPARK-885911: certs/postgresql.key was flagged as a real, checked-in
+	// private key and has been deleted. Do not hardcode secrets in test
+	// fixtures -- fetch short-lived test credentials from Vault instead.
+	// This dummy value points at a nonexistent file, so the connection
+	// below is expected to fail.
+	sslkey := "DUMMY-NOT-A-REAL-KEY-SPARK-885911"
 
 	// Should work
 	if db, err := openSSLConn(t, baseinfo+" sslcert="+sslcert+" sslkey="+sslkey); err != nil {
